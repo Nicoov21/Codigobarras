@@ -3,7 +3,7 @@ package com.mycompany.proyectoinventario;
 import javax.swing.JOptionPane;
 
 public class LoginPrincipal extends javax.swing.JFrame {
-
+    private int bloqueo = 0;
     public LoginPrincipal() {
         initComponents();
     }
@@ -22,7 +22,7 @@ public class LoginPrincipal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtuser = new javax.swing.JTextField();
         txtpass = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnInicioSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusCycleRoot(false);
@@ -39,11 +39,11 @@ public class LoginPrincipal extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Felix Titling", 1, 12)); // NOI18N
         jLabel3.setText("Contraseña:");
 
-        jButton1.setFont(new java.awt.Font("Felix Titling", 1, 12)); // NOI18N
-        jButton1.setText("Iniciar sesión");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnInicioSesion.setFont(new java.awt.Font("Felix Titling", 1, 12)); // NOI18N
+        btnInicioSesion.setText("Iniciar sesión");
+        btnInicioSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnInicioSesionActionPerformed(evt);
             }
         });
 
@@ -66,7 +66,7 @@ public class LoginPrincipal extends javax.swing.JFrame {
                 .addContainerGap(188, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnInicioSesion)
                 .addGap(265, 265, 265))
         );
         layout.setVerticalGroup(
@@ -83,7 +83,7 @@ public class LoginPrincipal extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(64, 64, 64)
-                .addComponent(jButton1)
+                .addComponent(btnInicioSesion)
                 .addContainerGap(74, Short.MAX_VALUE))
         );
 
@@ -91,15 +91,34 @@ public class LoginPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioSesionActionPerformed
         // TODO add your handling code here:
         String user = txtuser.getText().trim();
         String pass = txtpass.getText().trim();
-        int bloqueo = 0;
         if(user.isEmpty() || pass.isEmpty()){
-            
+            JOptionPane.showMessageDialog(null, "Recuerda que no pueden quedar campos vacíos");
+        }else if (user.equals("admin") && pass.equals("admin")){
+            Inicio inicio = new Inicio();
+            inicio.setVisible(true);
+            this.dispose();
+            bloqueo=0;
+        }else{
+            bloqueo++;
+            JOptionPane.showMessageDialog(null, "Credenciales incorrectas");
+            txtuser.setText("");
+            txtpass.setText("");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        if(bloqueo == 3){
+            String codigo = JOptionPane.showInputDialog(null,"Ingrese el codigo para desbloquear:");
+            if (codigo.equals("nicolas")){
+                JOptionPane.showMessageDialog(null, "Aplicación desbloqueada.","Estado de la aplicación", JOptionPane.INFORMATION_MESSAGE);
+                bloqueo = 0;
+            }else{
+                JOptionPane.showMessageDialog(null, "Código incorrecto. La aplicación se bloqueará.");
+                System.exit(0); // Cierra la aplicación si el código es incorrecto
+            }
+        }
+    }//GEN-LAST:event_btnInicioSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -135,7 +154,7 @@ public class LoginPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnInicioSesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

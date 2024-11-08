@@ -115,7 +115,7 @@ public class LoginPrincipal extends javax.swing.JFrame {
                 bloqueo = 0;
             }else{
                 JOptionPane.showMessageDialog(null, "Código incorrecto. La aplicación se bloqueará.");
-                System.exit(0); // Cierra la aplicación si el código es incorrecto
+                System.exit(0);
             }
         }
     }//GEN-LAST:event_btnInicioSesionActionPerformed
